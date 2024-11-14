@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: url(../WEB/background/hot_wheels_bg.png);
+            background-size: cover;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+        }
+        .checkout-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .checkout-table th, .checkout-table td {
+            padding: 12px;
+            text-align: left;
+        }
+        .checkout-table th {
+            background-color: #FF5722;
+            color: white;
+        }
+        .checkout-table td {
+            border-bottom: 1px solid #ddd;
+        }
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+        }
+        .total-section {
+            text-align: right;
+            margin-top: 10px;
+        }
+        .total-section div {
+            margin: 5px 0;
+        }
+        .submit-button {
+            background-color: #FF5722;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .submit-button:hover {
+            background-color: #e64a19;
+        }
+    </style>
+</head>
+<body>
+
+    <table class="checkout-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div>Skyline R34</div>
+                    <div>Price: $ 396.00</div>
+                    <div>Romove</div>
+                </td>
+                <td>
+                    <input type="number" class="quantity-input" value="1" min="1" onchange="updateSubtotal(this, 396)">
+                </td>
+                <td>$ 396.00</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Toyota Supra</div>
+                    <div>Price: $ 100.00</div>
+                    <div>Romove</div>
+                </td>
+                <td>
+                    <input type="number" class="quantity-input" value="1" min="1" onchange="updateSubtotal(this, 100)">
+                </td>
+                <td>$ 100.00</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Track set City Shark escape</div>
+                    <div>Price: $1,131.00</div>
+                    <div>Romove</div>
+                </td>
+                <td>
+                    <input type="number" class="quantity-input" value="1" min="1" onchange="updateSubtotal(this,  1131)">
+                </td>
+                <td>$1,131.00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="total-section">
+        <div>Subtotal: <span id="subtotal">$ 1.627,00</span></div>
+        <div>Tax: <span id="tax">$ 5,00</span></div>
+        <div><strong>Total: <span id="total">$ 1.632,00</span></strong></div>
+    </div>
+
+    <a href="utama.html"><button class="submit-button" onclick="submitCheckout()">Submit</button></a>
+
+    <script>
+        function updateSubtotal(input, price) {
+            const quantity = input.value;
+            const subtotalCell = input.parentElement.nextElementSibling;
+            const newSubtotal = (quantity * price).toFixed(2);
+            subtotalCell.textContent = `$${newSubtotal}`;
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let subtotal = 0;
+            const subtotalCells = document.querySelectorAll(".checkout-table tbody td:nth-child(3)");
+            subtotalCells.forEach(cell => {
+                subtotal += parseFloat(cell.textContent.replace('$', ''));
+            });
+            document.getElementById("subtotal").textContent = `$${subtotal.toFixed(2)}`;
+
+            const tax = subtotal * 0.05; // 5% tax
+            document.getElementById("tax").textContent = `$${tax.toFixed(2)}`;
+            
+            const total = subtotal + tax;
+            document.getElementById("total").textContent = `$${total.toFixed(2)}`;
+        }
+
+        function submitCheckout() {
+            alert("Checkout submitted!");
+            // Tambahkan aksi submit lain seperti redirect atau menyimpan data checkout di sini
+        }
+    </script>
+
+</body>
+</html>
